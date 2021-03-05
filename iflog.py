@@ -34,8 +34,8 @@ def main(args=None):
 
     # create activity for the task
     click.echo("Create Activity for Project \"{}\", Task \"{}\"".format(project_selected.name, task_selected.name))
-    activity_description = click.prompt("Activity Description", type=str)
-    activity_hours = click.prompt("Activity Time (Enter in Hours, 0.5 for 30m)", type=float)
+    activity_description = click.prompt("> Activity Description", type=str)
+    activity_hours = click.prompt("> Activity Time (Enter in Hours, 0.5 for 30m)", type=float)
 
     result = moco.Activity.create(
         activity_date=datetime.now(),
