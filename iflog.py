@@ -21,21 +21,21 @@ def main(args=None):
         click.echo("[{}]: {}".format(i, p.name))
 
     # retrieve projects
-    project_index = click.prompt("Which Project would you like to log time on?", type=int)
+    project_index = click.prompt("> Which Project would you like to log time on?", type=int)
     project_selected = projects_avail[project_index]
-    click.echo("Project {} selected".format(project_selected.name))
+    click.echo("Project \"{}\" selected".format(project_selected.name))
 
     # retrieve project tasks
     tasks_avail = moco.ProjectTask.getlist(project_selected.id).items
     for i, t in enumerate(tasks_avail):
         click.echo("[{}]: {}".format(i, t.name))
-    tasks_index = click.prompt("Which Task would you like to log time on?", type=int)
+    tasks_index = click.prompt("> Which Task would you like to log time on?", type=int)
     task_selected = tasks_avail[tasks_index]
 
     # create activity for the task
-    click.echo("Create Activity for Project {}, Task {}".format(project_selected.name, task_selected.name))
-    activity_description = click.prompt("Activity Description: ", type=str)
-    activity_hours = click.prompt("Activity Time: (Enter in Hours, 0.5 for 30m)", type=float)
+    click.echo("Create Activity for Project \"{}\", Task \"{}\"".format(project_selected.name, task_selected.name))
+    activity_description = click.prompt("Activity Description", type=str)
+    activity_hours = click.prompt("Activity Time (Enter in Hours, 0.5 for 30m)", type=float)
 
     result = moco.Activity.create(
         activity_date=datetime.now(),
@@ -46,7 +46,7 @@ def main(args=None):
     )
 
     if isinstance(result, ObjectResponse):
-        click.echo("Time logged successfully")
+        click.echo("Activity created successfully")
 
 
 if __name__ == "__main__":
