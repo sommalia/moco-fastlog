@@ -55,12 +55,12 @@ def main(config=None, args=None):
 
     projects_avail = moco.Project.assigned().items
     for i, p in enumerate(projects_avail):
-        click.echo("[{}]: {}".format(i, p.name))
+        click.echo("[{}]: {} => {}".format(i, p.customer.name, p.name))
 
     # retrieve projects
     project_index = click.prompt("> Which Project would you like to log time on?", type=int)
     project_selected = projects_avail[project_index]
-    click.echo("Project \"{}\" selected".format(project_selected.name))
+    click.echo("Project \"{}, {}\" selected".format(project_selected.customer.name, project_selected.name))
 
     # retrieve project tasks
     tasks_avail = moco.ProjectTask.getlist(project_selected.id).items
