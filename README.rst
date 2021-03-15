@@ -51,9 +51,9 @@ to log time for.
 
 ::
 
-    [0] My first Project
-    [1] My second Project
-    [2] My third Project
+    [0] First Customer => My first Project
+    [1] Second Customer => My second Project
+    [2] Third Customer => My third Project
     > Which Project would you like to log time on?: 1
     Project "My second Project" selected
 
