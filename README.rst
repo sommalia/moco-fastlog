@@ -75,3 +75,25 @@ time we want to log.
     > Activity Time (Enter in Hours, 0.5 for 30m): 0.5
     Time logged successfully
 
+Loading authentication info from config file
+--------------------------------------------
+
+As an alternative to setting environment variables you can also load your api key and domain from a .json config file.
+The file holds the same variables we would otherwise set as environment vars.
+
+.. code-block:: javascript
+
+    {
+        "api_key" : "REPLACE_ME",
+        "domain": "REPLACE_ME"
+    }
+
+After you have created the config file, invoke the script like this.
+
+.. code-block:: shell
+
+    $ python iflog.py --config /path/to/my/configfile.json
+
+
+
+

@@ -1,20 +1,57 @@
 """Console script for interactive moco fastlog"""
 import sys
 import click
+from json import loads, load
 from os import environ
 from datetime import datetime
 from moco_wrapper import Moco
 from moco_wrapper.util.response import ObjectResponse
 
-@click.command()
-def main(args=None):
-    # load auth data from environment
+
+def auth_from_environ():
+    """
+    Load authentication info from environment variables
+
+    :return: authentication info
+    """
     api_key = environ.get("MOCO_FASTLOG_API_KEY")
     domain = environ.get("MOCO_FASTLOG_DOMAIN")
-    moco = Moco(auth={
-        "domain": domain,
-        "api_key": api_key
-    })
+
+    return {
+        "api_key": api_key,
+        "domain": domain
+    }
+
+
+def auth_from_config(config_path):
+    """
+    Load authentication info from json config file
+
+    :param config_path: Path to json config file
+    :return: authentication info
+    """
+    auth = {
+        "api_key": None,
+        "domain": None
+    }
+
+    with open(config_path, "r") as f:
+        config_dic = load(f)
+        auth["api_key"] = config_dic["api_key"]
+        auth["domain"] = config_dic["domain"]
+
+    return auth
+
+
+@click.command()
+@click.option('--config', type=click.Path(exists=True, readable=True))
+def main(config=None, args=None):
+    if config is not None:
+        auth = auth_from_config(config)
+    else:
+        auth = auth_from_environ()
+
+    moco = Moco(auth=auth)
 
     projects_avail = moco.Project.assigned().items
     for i, p in enumerate(projects_avail):
